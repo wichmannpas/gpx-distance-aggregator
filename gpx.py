@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from argparse import ArgumentParser, Namespace
-from xml.etree import ElementTree
+
+from lxml import etree
 
 from geopy.distance import vincenty
 
@@ -14,7 +15,8 @@ def main(arguments: Namespace):
 
 def track_distance(gpx_file_path: str):
     """Calculate the total distance of a GPX track."""
-    points = ElementTree.parse(gpx_file_path).getroot().findall('*//{http://www.topografix.com/GPX/1/1}trkpt')
+    root = etree.parse(gpx_file_path).getroot()
+    points = root.findall('*//trkpt', root.nsmap)
     distance = sum(
         vincenty(
             (first.get('lat'), first.get('lon')),
