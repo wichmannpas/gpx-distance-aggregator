@@ -9,7 +9,7 @@ def main(arguments: Namespace):
     aggregated_total_distance = sum(
         track_distance(gpx_file)
         for gpx_file in arguments.gpx_files)
-    print(aggregated_total_distance)
+    print('Total distance in kilometers:', aggregated_total_distance)
 
 
 def track_distance(gpx_file_path: str):
